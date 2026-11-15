@@ -1,0 +1,71 @@
+/** Creative team. `featured: true` members appear on the homepage. */
+export const team = [
+  {
+    id: 'maya-okonkwo',
+    slug: 'maya-okonkwo',
+    name: 'Maya Okonkwo',
+    role: 'Founder & Director',
+    bio: 'Maya founded FRAME® after a decade directing documentaries and commercials. Her work is known for quiet intensity and an unusual patience with real people on camera.',
+    image: '/images/team/maya-okonkwo.jpg',
+    social: [
+      { label: 'Instagram', href: 'https://instagram.com/' },
+      { label: 'LinkedIn', href: 'https://linkedin.com/' },
+    ],
+    featured: true,
+  },
+  {
+    id: 'elias-varga',
+    slug: 'elias-varga',
+    name: 'Elias Varga',
+    role: 'Director of Photography',
+    bio: 'Elias shoots on everything from 16mm to large-format digital, with a preference for practical light and a love of long, unbroken takes.',
+    image: '/images/team/elias-varga.jpg',
+    social: [{ label: 'Instagram', href: 'https://instagram.com/' }],
+    featured: true,
+  },
+  {
+    id: 'noor-haddad',
+    slug: 'noor-haddad',
+    name: 'Noor Haddad',
+    role: 'Executive Producer',
+    bio: 'Noor builds the structures that let ambitious films get made: budgets, schedules, partners and the occasional miracle on a Friday afternoon.',
+    image: '/images/team/noor-haddad.jpg',
+    social: [{ label: 'LinkedIn', href: 'https://linkedin.com/' }],
+    featured: true,
+  },
+  {
+    id: 'ingrid-solberg',
+    slug: 'ingrid-solberg',
+    name: 'Ingrid Solberg',
+    role: 'Creative Director',
+    bio: 'Ingrid leads brand storytelling and look development, translating strategy into visual worlds that audiences remember.',
+    image: '/images/team/ingrid-solberg.jpg',
+    social: [
+      { label: 'Instagram', href: 'https://instagram.com/' },
+      { label: 'Vimeo', href: 'https://vimeo.com/' },
+    ],
+    featured: true,
+  },
+  {
+    id: 'tomas-reyes',
+    slug: 'tomas-reyes',
+    name: 'Tomás Reyes',
+    role: 'Head of Post-production',
+    bio: 'An editor first, Tomás runs our post pipeline and believes the final cut is where a film is actually written.',
+    image: '/images/team/tomas-reyes.jpg',
+    social: [{ label: 'LinkedIn', href: 'https://linkedin.com/' }],
+    featured: false,
+  },
+  {
+    id: 'kenji-mori',
+    slug: 'kenji-mori',
+    name: 'Kenji Mori',
+    role: 'Colourist',
+    bio: 'Kenji grades our films and commercials, shaping contrast, colour and mood until every frame feels intentional.',
+    image: '/images/team/kenji-mori.jpg',
+    social: [{ label: 'Instagram', href: 'https://instagram.com/' }],
+    featured: false,
+  },
+]
+
+export const featuredTeam = team.filter((member) => member.featured)

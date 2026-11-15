@@ -1,0 +1,194 @@
+@import "tailwindcss";
+
+/* ==========================================================================
+   FRAME® design tokens (Tailwind v4 @theme)
+   Every token becomes a utility automatically, e.g.:
+   bg-base  bg-surface  bg-card  border-line  text-fg  text-muted  text-accent
+   font-display  font-sans  text-hero  text-display  text-title  ease-cinematic
+   To re-skin the template, edit the values below, nothing else.
+   ========================================================================== */
+@theme {
+  /* Colour */
+  --color-base: #080808;
+  --color-surface: #111111;
+  --color-card: #171717;
+  --color-line: #292929;
+  --color-fg: #e9e6df;
+  --color-muted: #999999;
+  --color-accent: #c5ff45;
+
+  /* Type families */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid editorial type scale (mobile -> large desktop) */
+  --text-hero: clamp(3.25rem, 13.5vw, 15rem);
+  --text-hero--line-height: 0.86;
+  --text-hero--letter-spacing: -0.045em;
+  --text-hero--font-weight: 700;
+
+  --text-display: clamp(2.5rem, 8vw, 9rem);
+  --text-display--line-height: 0.92;
+  --text-display--letter-spacing: -0.04em;
+  --text-display--font-weight: 700;
+
+  --text-title: clamp(1.75rem, 3.6vw, 3.5rem);
+  --text-title--line-height: 1.02;
+  --text-title--letter-spacing: -0.03em;
+  --text-title--font-weight: 600;
+
+  --text-menu: clamp(2.5rem, min(9vw, 11vh), 8rem);
+  --text-menu--line-height: 1;
+  --text-menu--letter-spacing: -0.04em;
+  --text-menu--font-weight: 700;
+
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1;
+  --text-eyebrow--letter-spacing: 0.18em;
+
+  /* Motion */
+  --ease-cinematic: cubic-bezier(0.76, 0, 0.24, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Breakpoints (Tailwind defaults plus a large-desktop step) */
+  --breakpoint-3xl: 120rem;
+}
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    /* Reserves the scrollbar's space so locking scroll (menu/preloader) never shifts the layout. */
+    scrollbar-gutter: stable;
+    background-color: var(--color-base);
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background-color: var(--color-base);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Prevents animated/off-screen elements from creating horizontal scroll,
+       without breaking position: sticky (unlike overflow-x: hidden). */
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  img, video { display: block; max-width: 100%; }
+
+  a { color: inherit; text-decoration: none; }
+
+  button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; padding: 0; }
+
+  ::selection { background: var(--color-accent); color: var(--color-base); }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  /* Slim, on-brand scrollbar */
+  html { scrollbar-width: thin; scrollbar-color: var(--color-line) var(--color-base); }
+}
+
+/* ---------- Reusable layout / typographic utilities ---------- */
+@utility container-frame {
+  width: 100%;
+  max-width: 120rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 4rem);
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--text-eyebrow);
+  line-height: var(--text-eyebrow--line-height);
+  letter-spacing: var(--text-eyebrow--letter-spacing);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+@utility section-space {
+  padding-block: clamp(5rem, 12vw, 12rem);
+}
+
+/* Outlined (stroke-only) display text */
+@utility text-outline {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-line);
+}
+
+/* Animated underline for text links */
+@utility link-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.15em;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@utility sr-only-focusable {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 100;
+  background: var(--color-accent);
+  color: var(--color-base);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  transition: top 0.2s;
+  &:focus { top: 1rem; }
+}
+
+/* ---------- Custom cursor ----------
+   .has-custom-cursor is added by <Cursor /> only on fine-pointer, non-reduced-motion devices. */
+.has-custom-cursor,
+.has-custom-cursor a,
+.has-custom-cursor button,
+.has-custom-cursor [role="button"],
+.has-custom-cursor summary,
+.has-custom-cursor label {
+  cursor: none;
+}
+.has-custom-cursor input,
+.has-custom-cursor textarea,
+.has-custom-cursor select {
+  cursor: auto;
+}
+
+/* ---------- Reduced motion (global safety net) ----------
+   GSAP / Framer Motion also check this preference in Phase 2+.
+   This rule neutralises CSS transitions & animations for those users. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
