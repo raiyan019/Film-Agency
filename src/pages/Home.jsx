@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useScrollReveal } from '@/animations/useScrollReveal'
 import ContactCTA from '@/components/home/ContactCTA'
+import FilmStripBand from '@/components/home/FilmStripBand'
 import Hero from '@/components/home/Hero'
 import JournalPreview from '@/components/home/JournalPreview'
 import ProcessSection from '@/components/home/ProcessSection'
@@ -24,6 +25,7 @@ export default function Home() {
       <ServicesSection />
       <Showreel />
       <ProcessSection />
+      <FilmStripBand />
       <TeamPreview />
       <JournalPreview />
       <ContactCTA />

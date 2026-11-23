@@ -58,7 +58,7 @@ export default function Hero() {
 
   return (
     <section ref={rootRef} aria-label="Introduction" className="relative isolate flex min-h-svh flex-col justify-end overflow-hidden">
-      <div ref={backgroundRef} aria-hidden="true" className="absolute inset-0 -z-20">
+      <div ref={backgroundRef} data-bg-parallax aria-hidden="true" className="absolute inset-0 -z-20">
         <MediaImage src={hero.poster} seed="hero" loading="eager" fetchPriority="high" />
         {showVideo && (
           <video
@@ -81,7 +81,7 @@ export default function Hero() {
 
       <ViewfinderFrame inset="1.25rem" />
 
-      <div className="container-frame relative pb-20 pt-32 sm:pb-24">
+      <div data-scroll-fade className="container-frame relative pb-20 pt-32 sm:pb-24">
         <div data-hero-fade className="eyebrow mb-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-fg/80">
           <RecIndicator className="text-fg" />
           <Timecode />

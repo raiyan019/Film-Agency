@@ -10,9 +10,10 @@ export default function ContactCTA() {
   return (
     <section id="contact-cta" className="section-space relative overflow-hidden" aria-label="Contact">
       <ReelIcon
-        size={420}
+        size={460}
+        strokeWidth={0.3}
         spin
-        className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 text-line lg:block"
+        className="pointer-events-none absolute -right-24 top-1/2 hidden -translate-y-1/2 text-muted/30 lg:block"
       />
       <div className="container-frame relative">
         <HeadingLines lines={cta.lines} accentPunctuation className="text-display uppercase" />

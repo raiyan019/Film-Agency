@@ -1,20 +1,60 @@
-import { useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { AnimatePresence } from 'framer-motion'
 import { Play } from 'lucide-react'
+import { gsap } from '@/animations/gsap'
 import MediaImage from '@/components/common/MediaImage'
 import { ViewfinderFrame } from '@/components/common/FilmSymbols'
 import { homeContent } from '@/data/home'
 import ShowreelModal from './ShowreelModal'
 
+/**
+ * Showreel. On desktop (motion allowed) the section pins briefly while the framed picture expands
+ * to fill the screen (clip-path), like a projector opening up. On mobile and for reduced-motion
+ * visitors it's a simple full-width banner. The modal is portalled to <body> so the pin's
+ * transform can never break its position: fixed.
+ */
 export default function Showreel() {
   const { showreel } = homeContent
   const [open, setOpen] = useState(false)
   const triggerRef = useRef(null)
+  const sectionRef = useRef(null)
+  const frameRef = useRef(null)
+  const posterRef = useRef(null)
+
+  useLayoutEffect(() => {
+    const mm = gsap.matchMedia()
+
+    mm.add(
+      { canPin: '(min-width: 1024px) and (min-height: 600px)', reduceMotion: '(prefers-reduced-motion: reduce)' },
+      (context) => {
+        const { canPin, reduceMotion } = context.conditions
+        if (!canPin || reduceMotion) return
+
+        gsap
+          .timeline({
+            defaults: { ease: 'none' },
+            scrollTrigger: {
+              trigger: sectionRef.current,
+              start: 'top top',
+              end: '+=90%',
+              pin: true,
+              scrub: 0.6,
+              anticipatePin: 1,
+            },
+          })
+          .fromTo(frameRef.current, { clipPath: 'inset(16% 14% 16% 14%)' }, { clipPath: 'inset(0% 0% 0% 0%)' }, 0)
+          .fromTo(posterRef.current, { scale: 1.3 }, { scale: 1 }, 0)
+      }
+    )
+
+    return () => mm.revert()
+  }, [])
 
   return (
-    <section aria-label="Showreel" className="relative">
-      <div className="relative h-[75svh] min-h-[28rem] w-full overflow-hidden bg-card" data-mask>
-        <div data-mask-inner className="absolute inset-0">
+    <section ref={sectionRef} aria-label="Showreel" className="relative h-[75svh] min-h-[28rem] w-full lg:h-svh">
+      <div ref={frameRef} className="absolute inset-0 overflow-hidden bg-card">
+        <div ref={posterRef} className="absolute inset-0">
           <MediaImage src={showreel.poster} seed="showreel" alt="" />
         </div>
         <div aria-hidden="true" className="absolute inset-0 bg-base/45" />
@@ -41,17 +81,20 @@ export default function Showreel() {
         </p>
       </div>
 
-      <AnimatePresence>
-        {open && (
-          <ShowreelModal
-            title={showreel.title}
-            video={showreel.video}
-            poster={showreel.poster}
-            returnFocusRef={triggerRef}
-            onClose={() => setOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+      {createPortal(
+        <AnimatePresence>
+          {open && (
+            <ShowreelModal
+              title={showreel.title}
+              video={showreel.video}
+              poster={showreel.poster}
+              returnFocusRef={triggerRef}
+              onClose={() => setOpen(false)}
+            />
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
     </section>
   )
 }

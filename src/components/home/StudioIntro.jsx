@@ -1,4 +1,5 @@
 import { ClapperIcon, SceneLabel } from '@/components/common/FilmSymbols'
+import ScrubText from '@/components/common/ScrubText'
 import Button from '@/components/common/Button'
 import HeadingLines from '@/components/common/HeadingLines'
 import MediaImage from '@/components/common/MediaImage'
@@ -24,15 +25,15 @@ export default function StudioIntro() {
 
           <div className="flex flex-col gap-8 lg:col-span-5 lg:col-start-8 lg:pt-28">
             <ClapperIcon size={32} className="text-accent" />
-            {intro.body.map((paragraph) => (
-              <p
-                key={paragraph}
-                data-reveal
-                className="text-lg leading-relaxed text-muted sm:text-xl [&:nth-of-type(1)]:text-fg"
-              >
-                {paragraph}
-              </p>
-            ))}
+            {intro.body.map((paragraph, index) =>
+              index === 0 ? (
+                <ScrubText key={paragraph} text={paragraph} className="text-xl leading-relaxed text-fg sm:text-2xl" />
+              ) : (
+                <p key={paragraph} data-reveal className="text-lg leading-relaxed text-muted sm:text-xl">
+                  {paragraph}
+                </p>
+              )
+            )}
             <div data-reveal>
               <Button to={intro.cta.to} variant="outline">{intro.cta.label}</Button>
             </div>

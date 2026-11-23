@@ -13,8 +13,9 @@ export default function NotFound() {
       <ViewfinderFrame inset="1.25rem" crosshair />
       <ReelIcon
         size={360}
+        strokeWidth={0.3}
         spin
-        className="pointer-events-none absolute -right-20 top-1/3 -z-10 hidden text-line lg:block"
+        className="pointer-events-none absolute -right-20 top-1/3 -z-10 hidden text-muted/30 lg:block"
       />
 
       <div className="container-frame eyebrow flex items-center justify-between">
